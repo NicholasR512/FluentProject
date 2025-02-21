@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Card.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Components\Card.razor.css" />
+    <None Remove="Components\StyleSheet.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.5" />
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.5" />
   </ItemGroup>

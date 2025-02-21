@@ -1,0 +1,14 @@
+﻿span {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+span :hover{
+    cursor: pointer;
+}
+
+::deep fluent-button{
+    width: 100px;
+    height: 100px;
+}
