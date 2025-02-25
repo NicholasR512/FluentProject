@@ -5,65 +5,100 @@
 
 <div>
     <span>
-        <FluentButton @onclick="() => Play(1)"> <p>1</p> </FluentButton>
-        <FluentButton @onclick="() => Play(3)"><p>3</p></FluentButton>
-        <FluentButton @onclick="() => Play(7)"><p>7</p></FluentButton>
-        <FluentButton @onclick="() => Play(3)"><p>3</p></FluentButton>
+        <FluentButton @onclick="() => Play(1)" Disabled="@flipped[1]"><p style="display: @shown[1]">1</p></FluentButton>
+        <FluentButton @onclick="() => Play(3)" Disabled="@flipped[3]"><p style="display: @shown[3]">3</p></FluentButton>
+        <FluentButton @onclick="() => Play(7)" Disabled="@flipped[7]"><p style="display: @shown[7]">7</p></FluentButton>
+        <FluentButton @onclick="() => Play(30)" Disabled="@flipped[30]"><p style="display: @shown[30]">3</p></FluentButton>
     </span>
-
     <span>
-        <FluentButton @onclick="() => Play(6)"><p>6</p></FluentButton>
-        <FluentButton @onclick="() => Play(1)"><p>1</p></FluentButton>
-        <FluentButton @onclick="() => Play(8)"><p>8</p></FluentButton>
-        <FluentButton @onclick="() => Play(2)"><p>2</p></FluentButton>
+        <FluentButton @onclick="() => Play(6)" Disabled="@flipped[6]"><p style="display: @shown[6]">6</p></FluentButton>
+        <FluentButton @onclick="() => Play(10)" Disabled="@flipped[10]"><p style="display: @shown[10]">1</p></FluentButton>
+        <FluentButton @onclick="() => Play(8)" Disabled="@flipped[8]"><p style="display: @shown[8]">8</p></FluentButton>
+        <FluentButton @onclick="() => Play(2)" Disabled="@flipped[2]"><p style="display: @shown[2]">2</p></FluentButton>
     </span>
-
     <span>
-        <FluentButton @onclick="() => Play(5)"><p>5</p></FluentButton>
-        <FluentButton @onclick="() => Play(4)"><p>4</p></FluentButton>
-        <FluentButton @onclick="() => Play(2)"><p>2</p></FluentButton>
-        <FluentButton @onclick="() => Play(6)"><p>6</p></FluentButton>
+        <FluentButton @onclick="() => Play(5)" Disabled="@flipped[5]"><p style="display: @shown[5]">5</p></FluentButton>
+        <FluentButton @onclick="() => Play(4)" Disabled="@flipped[4]"><p style="display: @shown[4]">4</p></FluentButton>
+        <FluentButton @onclick="() => Play(20)" Disabled="@flipped[20]"><p style="display: @shown[20]">2</p></FluentButton>
+        <FluentButton @onclick="() => Play(60)" Disabled="@flipped[60]"><p style="display: @shown[60]">6</p></FluentButton>
     </span>
-
     <span>
-        <FluentButton @onclick="() => Play(8)"><p>8</p></FluentButton>
-        <FluentButton @onclick="() => Play(5)"><p>5</p></FluentButton>
-        <FluentButton @onclick="() => Play(7)"><p>7</p></FluentButton>
-        <FluentButton @onclick="() => Play(4)"><p>4</p></FluentButton>
+        <FluentButton @onclick="() => Play(80)" Disabled="@flipped[80]"><p style="display: @shown[80]">8</p></FluentButton>
+        <FluentButton @onclick="() => Play(50)" Disabled="@flipped[50]"><p style="display: @shown[50]">5</p></FluentButton>
+        <FluentButton @onclick="() => Play(70)" Disabled="@flipped[70]"><p style="display: @shown[70]">7</p></FluentButton>
+        <FluentButton @onclick="() => Play(40)" Disabled="@flipped[40]"><p style="display: @shown[40]">4</p></FluentButton>
     </span>
 </div>
 
-
 @code {
-    private int total = 0;
-    private int card1 = 0;
-    private bool isMatch = false;
+
+    private int flipCount = 0;
+    private int firstValue = 0;
+    private int frValue = 0;
+
+    private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
+    {
+         {1, false}, {10, false}, {2, false}, {20, false},
+         {3, false}, {30, false}, {4, false}, {40, false},
+         {5, false}, {50, false}, {6, false}, {60, false},
+         {7, false}, {70, false}, {8, false}, {80, false}
+    };
+
+    private Dictionary<int, string> shown = new Dictionary<int, string>()
+    {
+         {1, "none"}, {10, "none"}, {2, "none"}, {20, "none"},
+         {3, "none"}, {30, "none"}, {4, "none"}, {40, "none"},
+         {5, "none"}, {50, "none"}, {6, "none"}, {60, "none"},
+         {7, "none"}, {70, "none"}, {8, "none"}, {80, "none"}
+    };
+
+
+    private int Display(int n)
+    {
+        if (n > 8)
+        {
+            return n / 10;
+        }
+        else
+        {
+            return n;
+        }
+    }
 
     private void Play(int n)
     {
-        if (total == 0)
+        int curr = Display(n);
+        flipped[n] = true;
+        shown[n] = "block";
+
+        if (flipCount == 0)
         {
-            FlipCard(n);
-            card1 = n;
-            total += 1;
+            firstValue = curr;
+            frValue = n;
+            flipCount = 1;
         }
-        else if (total == 1)
+        else
         {
-            FlipCard(n);
-            total += 1;
-            if (card1 == n)
-            {
-                Console.WriteLine("match");
-                isMatch = true;
+            if (firstValue == curr){
+                Console.WriteLine("Match! Cue the victory dance!");
+                flipCount = 0;
             }
-            else
-            {
-                Console.WriteLine("no match");
+            else{
+                shown[n] = "block";
+                Delay(n, frValue);
+                Console.WriteLine("No match—better luck next time!");
+                flipped[frValue] = false;
+                flipped[n] = false;
+                flipCount = 0;
+                //Delay(n, frValue);
             }
-            total = 0;
         }
     }
-    private void FlipCard(int n){
-        Console.WriteLine(n);
+
+    private void Delay(int a, int b){
+        Thread.Sleep(2000);
+        Console.WriteLine("waited success");
+        shown[a] = "none";
+        shown[b] = "none";
     }
 }
