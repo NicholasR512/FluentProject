@@ -5,36 +5,37 @@
 
 <div>
     <span>
-        <FluentButton @onclick="() => Play(1)" Disabled="@flipped[1]"><p style="display: @shown[1]">1</p></FluentButton>
-        <FluentButton @onclick="() => Play(3)" Disabled="@flipped[3]"><p style="display: @shown[3]">3</p></FluentButton>
-        <FluentButton @onclick="() => Play(7)" Disabled="@flipped[7]"><p style="display: @shown[7]">7</p></FluentButton>
-        <FluentButton @onclick="() => Play(30)" Disabled="@flipped[30]"><p style="display: @shown[30]">3</p></FluentButton>
+        <FluentButton @onclick="() => Play(1)" Disabled="@flipped[1]"><p style="display: @shown[1]; font-size: 65px">😎</p></FluentButton>
+        <FluentButton @onclick="() => Play(3)" Disabled="@flipped[3]"><p style="display: @shown[3]; font-size: 65px">🤑</p></FluentButton>
+        <FluentButton @onclick="() => Play(7)" Disabled="@flipped[7]"><p style="display: @shown[7];font-size: 65px">🤡</p></FluentButton>
+        <FluentButton @onclick="() => Play(30)" Disabled="@flipped[30]"><p style="display: @shown[30];font-size: 65px">🤑</p></FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(6)" Disabled="@flipped[6]"><p style="display: @shown[6]">6</p></FluentButton>
-        <FluentButton @onclick="() => Play(10)" Disabled="@flipped[10]"><p style="display: @shown[10]">1</p></FluentButton>
-        <FluentButton @onclick="() => Play(8)" Disabled="@flipped[8]"><p style="display: @shown[8]">8</p></FluentButton>
-        <FluentButton @onclick="() => Play(2)" Disabled="@flipped[2]"><p style="display: @shown[2]">2</p></FluentButton>
+        <FluentButton @onclick="() => Play(6)" Disabled="@flipped[6]"><p style="display: @shown[6]; font-size: 65px">😈</p></FluentButton>
+        <FluentButton @onclick="() => Play(10)" Disabled="@flipped[10]"><p style="display: @shown[10]; font-size: 65px">😎</p></FluentButton>
+        <FluentButton @onclick="() => Play(8)" Disabled="@flipped[8]"><p style="display: @shown[8]; font-size: 65px">😍</p></FluentButton>
+        <FluentButton @onclick="() => Play(2)" Disabled="@flipped[2]"><p style="display: @shown[2]; font-size: 65px">🥸</p></FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(5)" Disabled="@flipped[5]"><p style="display: @shown[5]">5</p></FluentButton>
-        <FluentButton @onclick="() => Play(4)" Disabled="@flipped[4]"><p style="display: @shown[4]">4</p></FluentButton>
-        <FluentButton @onclick="() => Play(20)" Disabled="@flipped[20]"><p style="display: @shown[20]">2</p></FluentButton>
-        <FluentButton @onclick="() => Play(60)" Disabled="@flipped[60]"><p style="display: @shown[60]">6</p></FluentButton>
+        <FluentButton @onclick="() => Play(5)" Disabled="@flipped[5]"><p style="display: @shown[5]; font-size: 65px">🥶</p></FluentButton>
+        <FluentButton @onclick="() => Play(4)" Disabled="@flipped[4]"><p style="display: @shown[4]; font-size: 65px">💩</p></FluentButton>
+        <FluentButton @onclick="() => Play(20)" Disabled="@flipped[20]"><p style="display: @shown[20]; font-size: 65px">🥸</p></FluentButton>
+        <FluentButton @onclick="() => Play(60)" Disabled="@flipped[60]"><p style="display: @shown[60]; font-size: 65px">😈</p></FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(80)" Disabled="@flipped[80]"><p style="display: @shown[80]">8</p></FluentButton>
-        <FluentButton @onclick="() => Play(50)" Disabled="@flipped[50]"><p style="display: @shown[50]">5</p></FluentButton>
-        <FluentButton @onclick="() => Play(70)" Disabled="@flipped[70]"><p style="display: @shown[70]">7</p></FluentButton>
-        <FluentButton @onclick="() => Play(40)" Disabled="@flipped[40]"><p style="display: @shown[40]">4</p></FluentButton>
+        <FluentButton @onclick="() => Play(80)" Disabled="@flipped[80]"><p style="display: @shown[80]; font-size: 65px">😍</p></FluentButton>
+        <FluentButton @onclick="() => Play(50)" Disabled="@flipped[50]"><p style="display: @shown[50]; font-size: 65px">🥶</p></FluentButton>
+        <FluentButton @onclick="() => Play(70)" Disabled="@flipped[70]"><p style="display: @shown[70]; font-size: 65px">🤡</p></FluentButton>
+        <FluentButton @onclick="() => Play(40)" Disabled="@flipped[40]"><p style="display: @shown[40]; font-size: 65px">💩</p></FluentButton>
     </span>
 </div>
+<FluentButton @onclick="() => Restart()">Restart</FluentButton>
 
 @code {
-
     private int flipCount = 0;
     private int firstValue = 0;
     private int frValue = 0;
+    private bool isBusy = false;
 
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
     {
@@ -52,24 +53,19 @@
          {7, "none"}, {70, "none"}, {8, "none"}, {80, "none"}
     };
 
-
     private int Display(int n)
     {
-        if (n > 8)
-        {
-            return n / 10;
-        }
-        else
-        {
-            return n;
-        }
+        return n > 8 ? n / 10 : n;
     }
 
-    private void Play(int n)
+    private async Task Play(int n)
     {
+        if (isBusy) return; 
+
         int curr = Display(n);
         flipped[n] = true;
         shown[n] = "block";
+        StateHasChanged();  
 
         if (flipCount == 0)
         {
@@ -79,26 +75,50 @@
         }
         else
         {
-            if (firstValue == curr){
-                Console.WriteLine("Match! Cue the victory dance!");
+            if (firstValue == curr)
+            {
+                Console.WriteLine("Match!");
                 flipCount = 0;
             }
-            else{
-                shown[n] = "block";
-                Delay(n, frValue);
-                Console.WriteLine("No match—better luck next time!");
-                flipped[frValue] = false;
+            else
+            {
+
+                isBusy = true;
+
+                int previousCard = frValue;
+
+                StateHasChanged();
+
+                await UseTaskDelay();
+                shown[n] = "none";
+                shown[previousCard] = "none";
+                flipped[previousCard] = false;
                 flipped[n] = false;
                 flipCount = 0;
-                //Delay(n, frValue);
+                isBusy = false;
+                StateHasChanged();
             }
         }
     }
 
-    private void Delay(int a, int b){
-        Thread.Sleep(2000);
-        Console.WriteLine("waited success");
-        shown[a] = "none";
-        shown[b] = "none";
+    private async Task UseTaskDelay(int delayMilliseconds = 2000)
+    {
+        await Task.Delay(delayMilliseconds);
+    }
+
+    private void Restart(){
+        int num = 1;
+        while(num != 9){
+            if(num < 9){
+                flipped[num] = false;
+                shown[num] = "none";
+                num *= 10;
+            } else {
+                flipped[num] = false;
+                shown[num] = "none";
+                num /= 10;
+                num++;
+            }
+        }
     }
 }
