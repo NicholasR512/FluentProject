@@ -2,7 +2,7 @@
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
-<div role="status" style="padding-bottom: 1em;">
+<div role="status" style="padding-bottom: 1em; display: flex; justify-content: center; align-items: center;">
     <FluentBadge class="@colorClass">@result</FluentBadge>
 </div>
 <div>
@@ -37,12 +37,9 @@
     private int flipCount = 0;
     private int firstValue = 0;
     private int frValue = 0;
-<<<<<<< Updated upstream
     private bool isBusy = false;
-=======
     private string result = "";
     private string colorClass = "blue";
->>>>>>> Stashed changes
 
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
     {
@@ -60,8 +57,8 @@
          {7, "none"}, {70, "none"}, {8, "none"}, {80, "none"}
     };
 
-    
-    
+
+
     // Original emoji array
     string[] emj;
     string[] emj1 = new string[] { "🥸a", "🤑a", "🤡a", "🤑b", "😈a", "😎b", "😍a", "😎a", "🥶a", "💩a", "🥸b", "😈b", "😍b", "🥶b", "🤡b", "💩b" };
@@ -103,12 +100,12 @@
 
     private async Task Play(int n)
     {
-        if (isBusy) return; 
+        if (isBusy) return;
 
         int curr = Display(n);
         flipped[n] = true;
         shown[n] = "block";
-        StateHasChanged();  
+        StateHasChanged();
 
         if (flipCount == 0)
         {
@@ -118,10 +115,11 @@
         }
         else
         {
-<<<<<<< Updated upstream
             if (firstValue == curr)
             {
                 Console.WriteLine("Match!");
+                result = "Match! Cue the victory dance!";
+                colorClass = "green";
                 flipCount = 0;
             }
             else
@@ -130,6 +128,8 @@
                 isBusy = true;
 
                 int previousCard = frValue;
+                result = "No match—better luck next time!";
+                colorClass = "red";
 
                 StateHasChanged();
 
@@ -137,21 +137,6 @@
                 shown[n] = "none";
                 shown[previousCard] = "none";
                 flipped[previousCard] = false;
-=======
-            if (firstValue == curr){
-                Console.WriteLine("Match! Cue the victory dance!");
-                result = "Match! Cue the victory dance!";
-                colorClass = "green";
-                flipCount = 0;
-            }
-            else{
-                shown[n] = "block";
-                Delay(n, frValue);
-                Console.WriteLine("No match—better luck next time!");
-                result = "No match—better luck next time!";
-                colorClass = "red";
-                flipped[frValue] = false;
->>>>>>> Stashed changes
                 flipped[n] = false;
                 flipCount = 0;
                 isBusy = false;
@@ -165,14 +150,19 @@
         await Task.Delay(delayMilliseconds);
     }
 
-    private void Restart(){
+    private void Restart()
+    {
         int num = 1;
-        while(num != 9){
-            if(num < 9){
+        while (num != 9)
+        {
+            if (num < 9)
+            {
                 flipped[num] = false;
                 shown[num] = "none";
                 num *= 10;
-            } else {
+            }
+            else
+            {
                 flipped[num] = false;
                 shown[num] = "none";
                 num /= 10;
@@ -183,3 +173,5 @@
     }
 
 }
+
+
