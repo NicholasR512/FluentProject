@@ -2,7 +2,9 @@
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
-
+<div role="status" style="padding-bottom: 1em;">
+    <FluentBadge class="@colorClass">@result</FluentBadge>
+</div>
 <div>
     <span>
         <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]"><p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p></FluentButton>
@@ -35,7 +37,12 @@
     private int flipCount = 0;
     private int firstValue = 0;
     private int frValue = 0;
+<<<<<<< Updated upstream
     private bool isBusy = false;
+=======
+    private string result = "";
+    private string colorClass = "blue";
+>>>>>>> Stashed changes
 
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
     {
@@ -111,6 +118,7 @@
         }
         else
         {
+<<<<<<< Updated upstream
             if (firstValue == curr)
             {
                 Console.WriteLine("Match!");
@@ -129,6 +137,21 @@
                 shown[n] = "none";
                 shown[previousCard] = "none";
                 flipped[previousCard] = false;
+=======
+            if (firstValue == curr){
+                Console.WriteLine("Match! Cue the victory dance!");
+                result = "Match! Cue the victory dance!";
+                colorClass = "green";
+                flipCount = 0;
+            }
+            else{
+                shown[n] = "block";
+                Delay(n, frValue);
+                Console.WriteLine("No match—better luck next time!");
+                result = "No match—better luck next time!";
+                colorClass = "red";
+                flipped[frValue] = false;
+>>>>>>> Stashed changes
                 flipped[n] = false;
                 flipCount = 0;
                 isBusy = false;
