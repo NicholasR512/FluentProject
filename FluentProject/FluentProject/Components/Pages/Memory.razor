@@ -2,39 +2,80 @@
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
+
+<!-- Status display with a badge showing match result -->
 <div role="status" style="padding-bottom: 1em; margin-left: 35%;">
     <FluentBadge class="@colorClass">@result</FluentBadge>
 </div>
+
+<!-- Display the number of attempts -->
 <h2>@attempts</h2>
+
+<!-- Game grid: Each FluentButton represents a card -->
 <div>
     <span>
-        <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]"><p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[1]])" Disabled="@flipped[gg[emj[1]]]"><p style="display: @shown[gg[emj[1]]]; font-size: 65px">@emj[1]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[2]])" Disabled="@flipped[gg[emj[2]]]"><p style="display: @shown[gg[emj[2]]];font-size: 65px">@emj[2]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[3]])" Disabled="@flipped[gg[emj[3]]]"><p style="display: @shown[gg[emj[3]]];font-size: 65px">@emj[3]</p></FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]">
+            <p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[1]])" Disabled="@flipped[gg[emj[1]]]">
+            <p style="display: @shown[gg[emj[1]]]; font-size: 65px">@emj[1]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[2]])" Disabled="@flipped[gg[emj[2]]]">
+            <p style="display: @shown[gg[emj[2]]];font-size: 65px">@emj[2]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[3]])" Disabled="@flipped[gg[emj[3]]]">
+            <p style="display: @shown[gg[emj[3]]];font-size: 65px">@emj[3]</p>
+        </FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(gg[emj[4]])" Disabled="@flipped[gg[emj[4]]]"><p style="display: @shown[gg[emj[4]]]; font-size: 65px">@emj[4]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[5]])" Disabled="@flipped[gg[emj[5]]]"><p style="display: @shown[gg[emj[5]]]; font-size: 65px">@emj[5]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[6]])" Disabled="@flipped[gg[emj[6]]]"><p style="display: @shown[gg[emj[6]]]; font-size: 65px">@emj[6]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[7]])" Disabled="@flipped[gg[emj[7]]]"><p style="display: @shown[gg[emj[7]]]; font-size: 65px">@emj[7]</p></FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[4]])" Disabled="@flipped[gg[emj[4]]]">
+            <p style="display: @shown[gg[emj[4]]]; font-size: 65px">@emj[4]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[5]])" Disabled="@flipped[gg[emj[5]]]">
+            <p style="display: @shown[gg[emj[5]]]; font-size: 65px">@emj[5]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[6]])" Disabled="@flipped[gg[emj[6]]]">
+            <p style="display: @shown[gg[emj[6]]]; font-size: 65px">@emj[6]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[7]])" Disabled="@flipped[gg[emj[7]]]">
+            <p style="display: @shown[gg[emj[7]]]; font-size: 65px">@emj[7]</p>
+        </FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(gg[emj[8]])" Disabled="@flipped[gg[emj[8]]]"><p style="display: @shown[gg[emj[8]]]; font-size: 65px">@emj[8]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[9]])" Disabled="@flipped[gg[emj[9]]]"><p style="display: @shown[gg[emj[9]]]; font-size: 65px">@emj[9]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[10]])" Disabled="@flipped[gg[emj[10]]]"><p style="display: @shown[gg[emj[10]]]; font-size: 65px">@emj[10]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[11]])" Disabled="@flipped[gg[emj[11]]]"><p style="display: @shown[gg[emj[11]]]; font-size: 65px">@emj[11]</p></FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[8]])" Disabled="@flipped[gg[emj[8]]]">
+            <p style="display: @shown[gg[emj[8]]]; font-size: 65px">@emj[8]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[9]])" Disabled="@flipped[gg[emj[9]]]">
+            <p style="display: @shown[gg[emj[9]]]; font-size: 65px">@emj[9]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[10]])" Disabled="@flipped[gg[emj[10]]]">
+            <p style="display: @shown[gg[emj[10]]]; font-size: 65px">@emj[10]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[11]])" Disabled="@flipped[gg[emj[11]]]">
+            <p style="display: @shown[gg[emj[11]]]; font-size: 65px">@emj[11]</p>
+        </FluentButton>
     </span>
     <span>
-        <FluentButton @onclick="() => Play(gg[emj[12]])" Disabled="@flipped[gg[emj[12]]]"><p style="display: @shown[gg[emj[12]]]; font-size: 65px">@emj[12]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[13]])" Disabled="@flipped[gg[emj[13]]]"><p style="display: @shown[gg[emj[13]]]; font-size: 65px">@emj[13]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[14]])" Disabled="@flipped[gg[emj[14]]]"><p style="display: @shown[gg[emj[14]]]; font-size: 65px">@emj[14]</p></FluentButton>
-        <FluentButton @onclick="() => Play(gg[emj[15]])" Disabled="@flipped[gg[emj[15]]]"><p style="display: @shown[gg[emj[15]]]; font-size: 65px">@emj[15]</p></FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[12]])" Disabled="@flipped[gg[emj[12]]]">
+            <p style="display: @shown[gg[emj[12]]]; font-size: 65px">@emj[12]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[13]])" Disabled="@flipped[gg[emj[13]]]">
+            <p style="display: @shown[gg[emj[13]]]; font-size: 65px">@emj[13]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[14]])" Disabled="@flipped[gg[emj[14]]]">
+            <p style="display: @shown[gg[emj[14]]]; font-size: 65px">@emj[14]</p>
+        </FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[15]])" Disabled="@flipped[gg[emj[15]]]">
+            <p style="display: @shown[gg[emj[15]]]; font-size: 65px">@emj[15]</p>
+        </FluentButton>
     </span>
 </div>
+
+<!-- Button to restart the game -->
 <FluentButton @onclick="() => Restart()">Restart</FluentButton>
 
 @code {
+    // Variables for tracking game state
     private int flipCount = 0;
     private int firstValue = 0;
     private int frValue = 0;
@@ -43,6 +84,7 @@
     private string result = "";
     private string colorClass = "blue";
 
+    // Dictionaries to track which cards are flipped and visible
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
     {
          {1, false}, {10, false}, {2, false}, {20, false},
@@ -59,22 +101,20 @@
          {7, "none"}, {70, "none"}, {8, "none"}, {80, "none"}
     };
 
-
-
-    // Original emoji array
+    // Original emoji array (each pair represents matching cards)
     string[] emj;
     string[] emj1 = new string[] { "🥸a", "🤑a", "🤡a", "🤑b", "😈a", "😎b", "😍a", "😎a", "🥶a", "💩a", "🥸b", "😈b", "😍b", "🥶b", "🤡b", "💩b" };
 
-    // Initialize with a shuffled copy
+    // On component initialization, shuffle the emojis
     protected override void OnInitialized()
     {
         ShuffleEmojis();
     }
 
-    // Fisher-Yates shuffle algorithm
+    // Shuffle the emoji array using the Fisher-Yates algorithm
     void ShuffleEmojis()
     {
-        // Create a copy so the original array remains unchanged
+        // Clone the original array so it remains unchanged
         emj = (string[])emj1.Clone();
         Random random = new Random();
         for (int i = emj.Length - 1; i > 0; i--)
@@ -86,6 +126,8 @@
             emj[j] = temp;
         }
     }
+
+    // Dictionary mapping each emoji to its unique identifier
     private Dictionary<string, int> gg = new Dictionary<string, int>()
     {
         {"😎a", 1}, {"😎b", 10}, {"🤑a", 2}, {"🤑b", 20},
@@ -94,32 +136,35 @@
         {"💩a", 7}, {"💩b", 70}, {"🥸a", 8}, {"🥸b", 80}
     };
 
-
+    // Helper method to adjust the card's value for comparison
     private int Display(int n)
     {
         return n > 8 ? n / 10 : n;
     }
 
+    // Handles the logic when a card is played (flipped)
     private async Task Play(int n)
     {
-        if (isBusy) return;
+        if (isBusy) return; // Prevent actions while busy (e.g., during delay)
 
         int curr = Display(n);
-        flipped[n] = true;
-        shown[n] = "block";
-        StateHasChanged();
+        flipped[n] = true;       // Mark the current card as flipped
+        shown[n] = "block";      // Make the card visible
+        StateHasChanged();       // Update UI
 
         if (flipCount == 0)
         {
+            // First card flipped: record its value and key
             firstValue = curr;
             frValue = n;
             flipCount = 1;
         }
         else
         {
-            attempts++;
+            attempts++;  // Increment attempt counter
             if (firstValue == curr)
             {
+                // Cards match: show success message
                 Console.WriteLine("Match!");
                 result = "Match! Cue the victory dance!";
                 colorClass = "green";
@@ -127,16 +172,14 @@
             }
             else
             {
-
+                // No match: prepare to flip cards back over after a delay
                 isBusy = true;
-
                 int previousCard = frValue;
                 result = "No match—better luck next time!";
                 colorClass = "red";
-
                 StateHasChanged();
-
                 await UseTaskDelay();
+                // Hide the mismatched cards
                 shown[n] = "none";
                 shown[previousCard] = "none";
                 flipped[previousCard] = false;
@@ -148,11 +191,13 @@
         }
     }
 
+    // Asynchronous delay to allow players to see mismatched cards
     private async Task UseTaskDelay(int delayMilliseconds = 2000)
     {
         await Task.Delay(delayMilliseconds);
     }
 
+    // Resets the game state and reshuffles the emojis
     private void Restart()
     {
         int num = 1;
@@ -175,7 +220,4 @@
         }
         ShuffleEmojis();
     }
-
 }
-
-
