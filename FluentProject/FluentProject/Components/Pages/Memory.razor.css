@@ -9,6 +9,11 @@ div{
 }
 
 ::deep fluent-button {
-    width: 100px;
+    width: 99px;
+    max-width: 100px;
     height: 100px;
+}
+
+p {
+    color: white;
 }

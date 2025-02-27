@@ -5,7 +5,7 @@
 
 <div>
     <span>
-        <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]"><p style="display: @shown[gg[emj[0]]]; font-size: 65px">@emj[0]</p></FluentButton>
+        <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]"><p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p></FluentButton>
         <FluentButton @onclick="() => Play(gg[emj[1]])" Disabled="@flipped[gg[emj[1]]]"><p style="display: @shown[gg[emj[1]]]; font-size: 65px">@emj[1]</p></FluentButton>
         <FluentButton @onclick="() => Play(gg[emj[2]])" Disabled="@flipped[gg[emj[2]]]"><p style="display: @shown[gg[emj[2]]];font-size: 65px">@emj[2]</p></FluentButton>
         <FluentButton @onclick="() => Play(gg[emj[3]])" Disabled="@flipped[gg[emj[3]]]"><p style="display: @shown[gg[emj[3]]];font-size: 65px">@emj[3]</p></FluentButton>
@@ -56,8 +56,8 @@
     
     
     // Original emoji array
-    string[] emj1 = new string[] { "🥸a", "🤑a", "🤡a", "🤑b", "😈a", "😎b", "😍a", "😎a", "🥶a", "💩a", "🥸b", "😈b", "😍b", "🥶b", "🤡b", "💩b" };
     string[] emj;
+    string[] emj1 = new string[] { "🥸a", "🤑a", "🤡a", "🤑b", "😈a", "😎b", "😍a", "😎a", "🥶a", "💩a", "🥸b", "😈b", "😍b", "🥶b", "🤡b", "💩b" };
 
     // Initialize with a shuffled copy
     protected override void OnInitialized()
