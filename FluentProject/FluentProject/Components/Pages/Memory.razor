@@ -2,9 +2,10 @@
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
-<div role="status" style="padding-bottom: 1em; display: flex; justify-content: center; align-items: center;">
+<div role="status" style="padding-bottom: 1em; margin-left: 35%;">
     <FluentBadge class="@colorClass">@result</FluentBadge>
 </div>
+<h2>@attempts</h2>
 <div>
     <span>
         <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]"><p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p></FluentButton>
@@ -37,6 +38,7 @@
     private int flipCount = 0;
     private int firstValue = 0;
     private int frValue = 0;
+    private int attempts = 0;
     private bool isBusy = false;
     private string result = "";
     private string colorClass = "blue";
@@ -115,6 +117,7 @@
         }
         else
         {
+            attempts++;
             if (firstValue == curr)
             {
                 Console.WriteLine("Match!");
@@ -153,6 +156,7 @@
     private void Restart()
     {
         int num = 1;
+        attempts = 0;
         while (num != 9)
         {
             if (num < 9)
