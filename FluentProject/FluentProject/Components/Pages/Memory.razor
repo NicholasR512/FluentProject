@@ -2,17 +2,21 @@
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
+<h1 style="text-align: center; font-size: 3rem;">Memory</h1>
 
-<!-- Status display with a badge showing match result -->
-<div role="status" style="padding-bottom: 1em; margin-left: 35%;">
-    <FluentBadge class="@colorClass">@result</FluentBadge>
-</div>
 
 <!-- Display the number of attempts -->
-<h2>@attempts</h2>
+<h2>Attempts: @attempts</h2>
+<h2>Matches: @matches</h2>
+<h2>Best Score: @highScore</h2>
+
+<!-- Status display with a badge showing match result -->
+<div role="status" style="padding-bottom: 1em; text-align: center;">
+    <FluentBadge class="@colorClass" Style="font-size: larger;">@result</FluentBadge>
+</div>
 
 <!-- Game grid: Each FluentButton represents a card -->
-<div>
+<div class="board">
     <span>
         <FluentButton @onclick="() => Play(gg[emj[0]])" Disabled="@flipped[gg[emj[0]]]">
             <p style="display: @shown[gg[emj[0]]]; font-size: 65px;">@emj[0]</p>
@@ -72,7 +76,10 @@
 </div>
 
 <!-- Button to restart the game -->
-<FluentButton @onclick="() => Restart()">Restart</FluentButton>
+<div class="reset">
+    <FluentButton @onclick="() => Restart()" class="reset-btn" BackgroundColor="lightcoral">Restart</FluentButton>
+</div>
+
 
 @code {
     // Variables for tracking game state
@@ -80,6 +87,9 @@
     private int firstValue = 0;
     private int frValue = 0;
     private int attempts = 0;
+    private int matches = 0;
+    private int gamesPlayed = 0;
+    private int highScore;
     private bool isBusy = false;
     private string result = "";
     private string colorClass = "blue";
@@ -164,22 +174,37 @@
             attempts++;  // Increment attempt counter
             if (firstValue == curr)
             {
+                matches++;
                 // Cards match: show success message
                 Console.WriteLine("Match!");
-                result = "Match! Cue the victory dance!";
+                result = "Match!";
                 colorClass = "green";
                 flipCount = 0;
+                if(matches == 8){
+                    gamesPlayed++;
+                    if(gamesPlayed == 1){
+                        highScore = attempts;
+                    } else {
+                        if (IsHighScore(highScore, attempts))
+                        {
+                            highScore = attempts;
+                        }
+                    }
+
+                }
+
             }
             else
             {
                 // No match: prepare to flip cards back over after a delay
                 isBusy = true;
                 int previousCard = frValue;
-                result = "No match—better luck next time!";
+                result = "No match!";
                 colorClass = "red";
                 StateHasChanged();
                 await UseTaskDelay();
                 // Hide the mismatched cards
+                result = "";
                 shown[n] = "none";
                 shown[previousCard] = "none";
                 flipped[previousCard] = false;
@@ -202,6 +227,7 @@
     {
         int num = 1;
         attempts = 0;
+        matches = 0;
         while (num != 9)
         {
             if (num < 9)
@@ -219,5 +245,13 @@
             }
         }
         ShuffleEmojis();
+    }
+
+    private bool IsHighScore(int high, int n){
+        if(n < high){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
