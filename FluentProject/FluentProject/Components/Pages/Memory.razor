@@ -7,7 +7,7 @@
 
 <!-- Display the number of attempts -->
 <h2>Attempts: @attempts</h2>
-<h2>Matches: @matches</h2>
+<h2>Matches: @matches/8</h2>
 <h2>Best Score: @highScore</h2>
 
 <!-- Status display with a badge showing match result -->
@@ -228,6 +228,7 @@
         int num = 1;
         attempts = 0;
         matches = 0;
+        result = "";
         while (num != 9)
         {
             if (num < 9)
