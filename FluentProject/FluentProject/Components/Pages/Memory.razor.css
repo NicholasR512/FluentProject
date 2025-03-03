@@ -17,6 +17,11 @@ div .reset {
     margin-right: auto;
 }
 
+::deep div .game-over {
+    max-width: 75%;
+    margin-right: 0;
+}
+
 ::deep fluent-button {
     width: 99px;
     max-width: 100px;

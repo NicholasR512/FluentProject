@@ -81,6 +81,17 @@
 </div>
 
 
+<div class="game-over">
+    <FluentOverlay @bind-Visible=@visible
+    Opacity="0.5"
+    BackgroundColor=@overLayColor>
+        <h3>Game Over</h3>
+        <h3>@overLayMessage</h3>
+    </FluentOverlay>
+</div>
+
+
+
 @code {
     // Variables for tracking game state
     private int flipCount = 0;
@@ -93,6 +104,9 @@
     private bool isBusy = false;
     private string result = "";
     private string colorClass = "blue";
+    private string overLayColor = "#00FF00";
+    private string overLayMessage = "You Set A New High Score!!!!!";
+    private bool visible = false;
 
     // Dictionaries to track which cards are flipped and visible
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
@@ -182,12 +196,18 @@
                 flipCount = 0;
                 if(matches == 8){
                     gamesPlayed++;
+                    visible = true;
                     if(gamesPlayed == 1){
                         highScore = attempts;
                     } else {
                         if (IsHighScore(highScore, attempts))
                         {
                             highScore = attempts;
+                            overLayColor = "#00FF00";
+                            overLayMessage = "You Set A New High Score!!!!!";
+                        } else {
+                            overLayColor = "#FF0000";
+                            overLayMessage = "Better Luck Next Time :(";
                         }
                     }
 
