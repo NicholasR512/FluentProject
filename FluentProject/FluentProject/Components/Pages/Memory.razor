@@ -1,4 +1,4 @@
-﻿@page "/memory"
+@page "/memory"
 @rendermode InteractiveServer
 
 <PageTitle>Memory</PageTitle>
@@ -9,6 +9,10 @@
 <h2>Attempts: @attempts</h2>
 <h2>Matches: @matches/8</h2>
 <h2>Best Score: @highScore</h2>
+<h2>Time: @elapsedSeconds seconds</h2>
+<h2>Best Time: @timeScore seconds</h2>
+
+
 
 <!-- Status display with a badge showing match result -->
 <div role="status" style="padding-bottom: 1em; text-align: center;">
@@ -107,6 +111,10 @@
     private string overLayColor = "#00FF00";
     private string overLayMessage = "You Set A New High Score!!!!!";
     private bool visible = false;
+    private int timeScore;
+    private static System.Timers.Timer timer;
+    private static int elapsedSeconds = int.MaxValue;
+
 
     // Dictionaries to track which cards are flipped and visible
     private Dictionary<int, bool> flipped = new Dictionary<int, bool>()
@@ -133,6 +141,7 @@
     protected override void OnInitialized()
     {
         ShuffleEmojis();
+        StartTimer();
     }
 
     // Shuffle the emoji array using the Fisher-Yates algorithm
@@ -194,18 +203,32 @@
                 result = "Match!";
                 colorClass = "green";
                 flipCount = 0;
-                if(matches == 8){
+                if (matches == 8)
+                {
+                    timer?.Stop(); // Stop the timer
+                    timer?.Dispose();
+
+                    if (timeScore == 0 || elapsedSeconds < timeScore) // Ensure first-time update
+                    {
+                        timeScore = elapsedSeconds;
+                    }
+
                     gamesPlayed++;
                     visible = true;
-                    if(gamesPlayed == 1){
+                    if (gamesPlayed == 1)
+                    {
                         highScore = attempts;
-                    } else {
+                    }
+                    else
+                    {
                         if (IsHighScore(highScore, attempts))
                         {
                             highScore = attempts;
                             overLayColor = "#00FF00";
                             overLayMessage = "You Set A New High Score!!!!!";
-                        } else {
+                        }
+                        else
+                        {
                             overLayColor = "#FF0000";
                             overLayMessage = "Better Luck Next Time :(";
                         }
@@ -237,9 +260,27 @@
     }
 
     // Asynchronous delay to allow players to see mismatched cards
-    private async Task UseTaskDelay(int delayMilliseconds = 2000)
+    private async Task UseTaskDelay(int delayMilliseconds = 1000)
     {
         await Task.Delay(delayMilliseconds);
+    }
+    private void StartTimer()
+    {
+        if (timer != null)
+        {
+            timer.Stop();
+            timer.Dispose();
+        }
+
+        elapsedSeconds = 0; // Reset timer variable
+        timer = new System.Timers.Timer(1000); // Tick every 1 second
+        timer.Elapsed += (sender, e) =>
+        {
+            elapsedSeconds++;
+            InvokeAsync(StateHasChanged);
+        };
+        timer.AutoReset = true;
+        timer.Enabled = true;
     }
 
     // Resets the game state and reshuffles the emojis
@@ -249,6 +290,7 @@
         attempts = 0;
         matches = 0;
         result = "";
+        elapsedSeconds = 0;
         while (num != 9)
         {
             if (num < 9)
@@ -266,13 +308,22 @@
             }
         }
         ShuffleEmojis();
+        StartTimer();
     }
 
-    private bool IsHighScore(int high, int n){
-        if(n < high){
+    private bool IsHighScore(int high, int n)
+    {
+        if (n < high)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
+    }
+    private bool IsTimeScore(int high, int n)
+    {
+        return high == 0 || n < high; // Instead of int.MaxValue
     }
 }
